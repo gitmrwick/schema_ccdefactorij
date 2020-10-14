@@ -11,6 +11,10 @@
       background-color: rgb(20,20,20);
       color: rgb(200,200,200);
     }
+    a {
+      text-decoration: none;
+      color: rgb(240,240,200);
+    }
   </style>
 </head>
 <body>
