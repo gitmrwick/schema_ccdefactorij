@@ -6,6 +6,7 @@ let date_now = Date.now();
 let body_0 = document.body;
 let div_0 = document.createElement('div');
 const tijd_string =  'Getoonde starttijd';
+const yp_host = '<niet voor scm>';
 
 function date_sort(event_one, event_two) {
   let e1_tijd = event_one[tijd_string];
@@ -49,12 +50,18 @@ events.forEach( e => {
   let video = e.Video;
   let paid_tickets = e['sold tickets (paid)'];
   let total_tickets = e['Total tickets'];
+  let hospitality = e['Hospitality rider'];
+  let lichtplan = e.Lichtplan;
+  let lichtplan_2 = e['Lichtplan 2'];
+  let tech_fiche = e['Technische fiche'];
+  let tech_fiche_2 = e['Technische fiche 2'];
+  let opmerkingen = e['Notities / Opmerkingen Bijlagen'];
 
   if (tijd) {
     e_tijd = new Date(e.Datum + 'T' + tijd);
-    div_b.innerHTML = `${e_tijd} - ${e.Locatie.name}<br />${e.Naam}`;
+    div_b.innerHTML = `${e_tijd} - ${e.Locatie.name}<br />${e.Naam} - ${e.Naam-1}`;
   } else {
-    div_b.innerHTML = `${e.Naam} - ${e.Locatie.name}`;
+    div_b.innerHTML = `${e.Naam} - ${e.Locatie.name} - ${e.Naam-1}`;
   }
   div_a.append(div_b);
 
@@ -149,13 +156,43 @@ events.forEach( e => {
     div_a.append(div_total_tickets);
   }
 
-  if (bijlagen) { 
+  if (bijlagen) {
     bijlagen.forEach( eb => {
       let div_e = document.createElement('div');
-      // div_e.innerHTML = `<a href="${eb.url}">${eb.name}</a>`;
-      div_e.innerHTML = `bijlage ${eb.name}`;
+      div_e.innerHTML = `<a href="${yp_host}/${eb.url}">${eb.name}</a>`;
+      // div_e.innerHTML = `bijlage ${eb.name}`;
       div_a.append(div_e);
     });
+  }
+
+  if (opmerkingen) {
+    let div_opmerkingen = document.createElement('div');
+    div_opmerkingen.innerHTML = `opmerkingen: ${opmerkingen}`;
+    div_a.append(div_opmerkingen);
+  }
+
+  if (tech_fiche) {
+    let div_tech_fiche = document.createElement('div');
+    div_tech_fiche.innerHTML = `<a href="${yp_host}/${tech_fiche.URL}">tech_fiche</a>`;
+    div_a.append(div_tech_fiche);
+  }
+
+  if (tech_fiche_2) {
+    let div_tech_fiche_2 = document.createElement('div');
+    div_tech_fiche_2.innerHTML = `<a href="${yp_host}/${tech_fiche_2.URL}">tech_fiche_2</a>`;
+    div_a.append(div_tech_fiche_2);
+  }
+
+  if (lichtplan) {
+    let div_lichtplan = document.createElement('div');
+    div_lichtplan.innerHTML = `<a href="${yp_host}/${lichtplan.URL}">lichtplan</a>`;
+    div_a.append(div_lichtplan);
+  }
+
+  if (lichtplan_2.URL) {
+    let div_lichtplan_2 = document.createElement('div');
+    div_lichtplan_2.innerHTML = `<a href="${yp_host}/${lichtplan_2.URL}">lichtplan</a>`;
+    div_a.append(div_lichtplan_2);
   }
 
   div_0.append(div_a);
