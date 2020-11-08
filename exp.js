@@ -55,6 +55,8 @@ function date_sort(event_one, event_two) {
 
 events.sort(date_sort);
 
+let schema_events = {};
+
 events.forEach( e => {
   let div_a = document.createElement('div');
   div_a.style = 'padding: 0.5em; border: 2px solid grey;';
@@ -111,6 +113,25 @@ events.forEach( e => {
   div_b.innerHTML = `${e_date_string} | ${naam}<br/>`;
   div_b.innerHTML += `${locatie_naam} | ${naam1}`;
   div_a.append(div_b);
+
+  if (datum in schema_events) {
+    events_vandaag = schema_events[datum];
+    console.log(events_vandaag);
+    let e_length = events_vandaag.length;
+    console.log(e_length);
+    let prev = events_vandaag[e_length - 1];
+    console.log(prev);
+    if (prev.Naam === naam) {
+      let new_prev = [];
+      new_prev.push(prev);
+      new_prev.push(e);
+      prev = new_prev;
+    } else {
+      events_vandaag.push(e);
+    }
+  } else {
+    schema_events[datum] = [e];
+  }
 
   if (ts) {
     ts.forEach( es => {
@@ -258,3 +279,6 @@ events.forEach( e => {
 });
 
 body_0.append(div_0);
+
+console.log('schema_events: ');
+console.log(schema_events);

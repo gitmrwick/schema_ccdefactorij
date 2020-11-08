@@ -36,7 +36,6 @@ def wickdingske(a_datum, b_datum):
 
     json_data = {'a': a_datum, 'b': b_datum}
     response0 = requests.post(url0, json=json_data, headers=headers)
-    print('response0 text {}'.format(response0.text))
     
     dv_key = response0.json()['contents']['id']
 
@@ -46,7 +45,6 @@ def wickdingske(a_datum, b_datum):
         return response1.json()['contents']['status']
 
     url_status = get_status()
-    print('url_status {}'.format(url_status))
 
     if url_status == 'failed':
         return 'failed'
@@ -59,12 +57,40 @@ def wickdingske(a_datum, b_datum):
         url_status = get_status()
 
     if url_status == 'success':
-        print('success url_status {}'.format(url_status))
         url2 = '{}/{}/{}?{}'.format(url_host, url_path, dv_key, url_key)
         response2 = requests.get(url2, headers=headers)
         response2_json = response2.json()
+        for event in response2_json:
+            event_naam = event['Naam']
+            event_locatie = event['Locatie']
+            event_datum = event['Datum']
         return {'response': response2.json()}
     return 'failed'
 
 if __name__ == '__main__':
-    app.run('127.0.0.1', '44444', debug=True)
+    app.run('127.0.0.1', '55555', debug=True)
+
+# Locatie: { name: locatie_naam },
+# Datum: datum,
+# Naam: naam,
+# 'Naam-1': naam1,
+# 'Getoonde starttijd': tijd,
+# "Tijdschema’s": ts,
+# Bijlagen: bijlagen,
+# Algemeen: algemeen,
+# 'Audio/ Video registratie': av,
+# Geluid: geluid,
+# 'Geluidstafel (monitors)': monitor_tafel,
+# Licht: licht,
+# Lichtconsole: licht_console,
+# Projector: projector,
+# 'Pyro / Rook / Vuur': pyro,
+# Video: video,
+# 'sold tickets (paid)': paid_tickets,
+# 'Total tickets': total_tickets,
+# 'Hospitality rider': hospitality,
+# Lichtplan: lichtplan,
+# 'Lichtplan 2': lichtplan_2,
+# 'Technische fiche': tech_fiche,
+# 'Technische fiche 2': tech_fiche_2,
+# 'Notities / Opmerkingen Bijlagen': opmerkingen,                                                               
